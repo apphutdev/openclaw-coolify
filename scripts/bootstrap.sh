@@ -236,12 +236,18 @@ seed_agent() {
   local dir="/home/node/molt-$id"
   if [ "$id" = "main" ]; then dir="/home/node/molt"; fi
 
-  mkdir -p "$dir"
+  if ! mkdir -p "$dir" 2>/dev/null; then
+    echo "⚠️ WARNING: Could not create directory $dir. Check volume permissions."
+    return 1
+  fi
+
   if [ ! -f "$dir/AGENTS.md" ]; then
-    cat >"$dir/AGENTS.md" <<EOF
+    if ! cat >"$dir/AGENTS.md" <<EOF; then
 # AGENTS.md - $name
 This is the workspace for $name.
 EOF
+      echo "⚠️ WARNING: Could not write to $dir/AGENTS.md. Permission denied."
+    fi
   fi
 
   if [ ! -f "$dir/SOUL.md" ]; then

@@ -100,8 +100,8 @@ WORKDIR /app
 
 # Create necessary directories and set permissions
 # 'node' user already exists in the base image
-RUN mkdir -p /home/node/.moltbot /home/node/molt && \
-    chown -R node:node /home/node/.moltbot /home/node/molt /app
+RUN mkdir -p /home/node/.moltbot /home/node/molt /home/node/molt-linkding /home/node/molt-dbadmin && \
+    chown -R node:node /home/node/.moltbot /home/node/molt /home/node/molt-linkding /home/node/molt-dbadmin /app
 
 # Switch to non-root user for installation
 USER node
