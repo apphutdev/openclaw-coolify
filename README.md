@@ -64,6 +64,12 @@ Once running, check the **Service Logs** in Coolify.
 - You will see a **Dashboard URL** with a token (e.g., `http://.../?token=xyz`).
 - **Click that link** to access your Moltbot Gateway UI.
 
+### 4. Setup (Onboard)
+For a guided configuration of your agent's personality and skills:
+1.  Open the **Service Terminal** in Coolify.
+2.  Run: `moltbot onboard`
+3.  Follow the interactive wizard to set your model preferences and system prompts.
+
 ---
 
 ## 💬 Channel Setup
