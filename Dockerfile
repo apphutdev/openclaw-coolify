@@ -88,7 +88,7 @@ ENV PATH="/usr/local/go/bin:/usr/local/bin:/usr/bin:/bin:/root/.local/bin:/root/
 # OpenClaw install
 ARG OPENCLAW_BETA=false
 ENV OPENCLAW_BETA=${OPENCLAW_BETA} \
-    CLAWDBOT_NO_ONBOARD=1 \
+    OPENCLAW_NO_ONBOARD=1 \
     NPM_CONFIG_UNSAFE_PERM=true
 
 RUN if [ "$OPENCLAW_BETA" = "true" ]; then \
