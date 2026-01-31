@@ -64,19 +64,61 @@ if [ ! -f "$CONFIG_FILE" ]; then
   TOKEN=$(openssl rand -hex 24 2>/dev/null || node -e "console.log(require('crypto').randomBytes(24).toString('hex'))")
   cat >"$CONFIG_FILE" <<EOF
 {
+"commands": {
+    "native": true,
+    "nativeSkills": true,
+    "text": true,
+    "bash": true,
+    "config": true,
+    "debug": true,
+    "restart": true,
+    "useAccessGroups": true
+  },
+  "skills": {
+    "allowBundled": [
+      "*"
+    ],
+    "install": {
+      "nodeManager": "npm"
+    }
+  },
   "gateway": {
+  "port": $OPENCLAW_GATEWAY_PORT,
+  "mode": "local",
+    "bind": "lan",
+    "controlUi": {
+      "enabled": true,
+      "allowInsecureAuth": false
+    },
+    "trustedProxies": [
+      "*"
+    ],
+    "tailscale": {
+      "mode": "off",
+      "resetOnExit": false
+    },
     "auth": { "mode": "token", "token": "$TOKEN" }
   },
   "agents": {
     "defaults": {
+      "workspace": "$WORKSPACE_DIR",
+      "envelopeTimestamp": "on",
+      "envelopeElapsed": "on",
+      "cliBackends": {},
+      "heartbeat": {
+        "every": "1h"
+      },
+      "maxConcurrent": 4,
+      "sandbox": {
+        "mode": "non-main",
+        "scope": "session",
+        "browser": {
+          "enabled": true
+        }
+      }
     },
     "list": [
-      {
-        "id": "main",
-        "name": "OpenClaw",
-        "workspace": "$WORKSPACE_DIR",
-        "systemPrompt": "🧠 PRIME DIRECTIVE: You are OpenClaw, a Runtime Orchestrator. 1. You access Docker only via tcp://docker-proxy:2375. 2. You only manage containers labeled SANDBOX_CONTAINER=true or openclaw.managed=true. 3. NEVER run 'docker build' or 'docker push' — these are forbidden. Refer to SOUL.md and BOOTSTRAP.md for operational details."
-      }
+      { "id": "main","default": true, "name": "default",  "workspace": "/root/openclaw-workspace"}
     ]
   }
 }
