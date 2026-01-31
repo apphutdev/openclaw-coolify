@@ -100,6 +100,22 @@ export OPENCLAW_STATE_DIR="$OPENCLAW_STATE"
 [ -f scripts/sandbox-browser-setup.sh ] && bash scripts/sandbox-browser-setup.sh
 
 # ----------------------------
+# Recovery & Monitoring
+# ----------------------------
+if [ -f scripts/recover_sandbox.sh ]; then
+  echo "🛡️  Deploying Recovery Protocols..."
+  cp scripts/recover_sandbox.sh "$WORKSPACE_DIR/"
+  cp scripts/monitor_sandbox.sh "$WORKSPACE_DIR/"
+  chmod +x "$WORKSPACE_DIR/recover_sandbox.sh" "$WORKSPACE_DIR/monitor_sandbox.sh"
+  
+  # Run initial recovery
+  bash "$WORKSPACE_DIR/recover_sandbox.sh"
+  
+  # Start background monitor
+  nohup bash "$WORKSPACE_DIR/monitor_sandbox.sh" >/dev/null 2>&1 &
+fi
+
+# ----------------------------
 # Run OpenClaw
 # ----------------------------
 exec openclaw gateway run

@@ -119,7 +119,8 @@ COPY . .
 RUN ln -sf /root/.claude/bin/claude /usr/local/bin/claude || true && \
     ln -sf /root/.kimi/bin/kimi /usr/local/bin/kimi || true && \
     ln -sf /app/scripts/openclaw-approve.sh /usr/local/bin/openclaw-approve && \
-    chmod +x /app/scripts/bootstrap.sh /usr/local/bin/openclaw-approve
+    ln -sf /app/scripts/openclaw-approve.sh /usr/local/bin/openclaw-approve && \
+    chmod +x /app/scripts/*.sh /usr/local/bin/openclaw-approve
 
 
 EXPOSE 18789
